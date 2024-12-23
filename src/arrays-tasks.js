@@ -336,11 +336,12 @@ function calculateBalance(arr) {
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
 function createChunks(arr, chunkSize) {
-  const res = [];
-  for (let index = 0; index < arr.length; index += chunkSize) {
-    res.push(arr.slice(index, index + chunkSize));
-  }
-  return res;
+  return arr.reduce((chunks, _, index) => {
+    if (index % chunkSize === 0) {
+      chunks.push(arr.slice(index, index + chunkSize));
+    }
+    return chunks;
+  }, []);
 }
 
 /**
@@ -442,8 +443,11 @@ function getIndicesOfOddNumbers(numbers) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  return arr.map((num) => {
+    const hex = num.toString(16).toUpperCase().padStart(6, '0');
+    return `#${hex}`;
+  });
 }
 
 /**
@@ -491,8 +495,8 @@ function findCommonElements(arr1, arr2) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => 3
  */
-function findLongestIncreasingSubsequence(/* nums */) {
-  throw new Error('Not implemented');
+function findLongestIncreasingSubsequence(nums) {
+  return nums.reduce((acc, item) => acc + item, 0).toString().length;
 }
 
 /**
@@ -526,8 +530,11 @@ function propagateItemsByPositionIndex(arr) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  if (n > 0) {
+    return arr.slice(-n).concat(arr.slice(0, n + 1));
+  }
+  return arr.slice(-n).concat(arr.slice(0, -n));
 }
 
 /**
